@@ -1,0 +1,9 @@
+# Storage Information
+storage_system_ip: "XX.XX.YY.YY"
+size: "12"
+size_unit: "GiB"
+
+# vCenter Information
+vcenter_hostname: "XX.XX.XX.XX"
+esxi_hostname: "YY.YY.YY.YY"
+vcenter_datastore: "solution_demo_datastore"
