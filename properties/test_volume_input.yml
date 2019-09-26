@@ -1,0 +1,7 @@
+# Storage Information
+storage_system_ip: "XX.XX.YY.YY"
+cpg: "HPE3PAR_CPG"
+
+volume_name: "test_volume_ansible"     # Name of the volume in storage
+size: "10"                           # Size of the volume
+size_unit: "GiB"                     # Size Unit
