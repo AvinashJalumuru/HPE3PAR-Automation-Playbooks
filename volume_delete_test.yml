@@ -1,0 +1,20 @@
+- hosts: localhost
+  vars_files:
+  - properties/test_volume_input.yml
+  - properties/credential-vault 
+  tasks:
+    - name: Printing the Storage credentials 
+      debug:
+         msg: "{{ storage_system_ip }} : {{ storage_system_username }} : {{ storage_system_password }}"
+    
+    - name: Printing the Storage Volume details
+      debug:
+         msg: "{{ volume_name }} : {{ cpg }} : {{ size }} : {{ size_unit }}"
+    
+    - name: Delete Volume "{{ volume_name }}"
+      hpe3par_volume:
+        storage_system_ip="{{ storage_system_ip }}"
+        storage_system_username="{{ storage_system_username }}"
+        storage_system_password="{{ storage_system_password }}"
+        state=absent
+        volume_name="{{ volume_name }}"
