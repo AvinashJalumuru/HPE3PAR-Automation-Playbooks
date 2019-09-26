@@ -11,6 +11,10 @@
       debug:
          msg: "{{ volume_name }} : {{ cpg }} : {{ size }} : {{ size_unit }}"
     
+    - set_fact:
+        no_proxy_env: ""
+      when: no_proxy_env is not defined
+
     - name: Create Volume "{{ volume_name }}"
       hpe3par_volume:
         storage_system_ip="{{ storage_system_ip }}"
@@ -21,3 +25,5 @@
         cpg="{{ cpg }}"
         size="{{ size }}"
         size_unit="{{ size_unit }}"
+      environment:
+        no_proxy: "{{no_proxy_env}}"

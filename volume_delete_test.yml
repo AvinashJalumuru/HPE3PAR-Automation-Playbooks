@@ -10,6 +10,10 @@
     - name: Printing the Storage Volume details
       debug:
          msg: "{{ volume_name }} : {{ cpg }} : {{ size }} : {{ size_unit }}"
+
+    - set_fact:
+        no_proxy_env: ""
+      when: no_proxy_env is not defined
     
     - name: Delete Volume "{{ volume_name }}"
       hpe3par_volume:
@@ -18,3 +22,5 @@
         storage_system_password="{{ storage_system_password }}"
         state=absent
         volume_name="{{ volume_name }}"
+      environment:
+        no_proxy: "{{no_proxy_env}}"
