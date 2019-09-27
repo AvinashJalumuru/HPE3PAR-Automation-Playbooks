@@ -3,6 +3,9 @@
   - properties/ds_delete_input.yml
   - properties/credential-vault 
 
+  environment:
+    no_proxy: "{{ no_proxy_env }}"
+
   tasks:
     - name: Mount VMFS datastores to ESXi
       vmware_datastore_san_facts:

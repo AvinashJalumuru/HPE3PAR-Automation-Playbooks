@@ -3,6 +3,9 @@
   - properties/ds_create_input.yml
   - properties/credential-vault 
 
+  environment:
+    no_proxy: "{{ no_proxy_env }}"
+
   tasks:
     - name: Create Volume "{{ volume_name }}"
       hpe3par_volume:
