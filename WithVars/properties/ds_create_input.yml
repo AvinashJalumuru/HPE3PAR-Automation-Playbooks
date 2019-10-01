@@ -1,0 +1,13 @@
+# Storage Information
+storage_system_ip: "XX.XX.YY.YY"
+storage_cluster: "STORAGE_HOSTSET_CLUSTER"
+cpg: "HPE3PAR_CPG"
+
+volume_name: "solution_demo_volume"     # Name of the volume in storage
+size: "10"                           # Size of the volume
+size_unit: "GiB"                     # Size Unit
+
+# vCenter Information
+vcenter_hostname: "XX.XX.XX.XX"
+esxi_hostname: "YY.YY.YY.YY"
+vcenter_datastore: "solution_demo_datastore"

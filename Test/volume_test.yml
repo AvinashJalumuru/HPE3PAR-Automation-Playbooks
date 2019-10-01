@@ -1,0 +1,21 @@
+- hosts: localhost
+
+  tasks:
+    - name: Printing the Storage credentials 
+      debug:
+         msg: "{{ storage_system_ip }} : {{ storage_system_username }} : {{ storage_system_password }}"
+    
+    - name: Printing the Storage Volume details
+      debug:
+         msg: "{{ volume_name }} : {{ cpg }} : {{ size }} : {{ size_unit }}"
+
+    - name: Create Volume "{{ volume_name }}"
+      hpe3par_volume:
+        storage_system_ip="{{ storage_system_ip }}"
+        storage_system_username="{{ storage_system_username }}"
+        storage_system_password="{{ storage_system_password }}"
+        state=present
+        volume_name="{{ volume_name }}"
+        cpg="{{ cpg }}"
+        size="{{ size }}"
+        size_unit="{{ size_unit }}"
