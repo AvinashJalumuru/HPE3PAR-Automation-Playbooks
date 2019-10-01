@@ -3,7 +3,7 @@
   tasks:
     - name: Printing the Storage credentials 
       debug:
-         msg: "{{ storage_system_ip }} : {{ storage_system_username }} : {{ storage_system_password }}"
+         msg: "{{ storage_system_ip }} : {{ storage_system_username }}"
     
     - name: Printing the Storage Volume details
       debug:
