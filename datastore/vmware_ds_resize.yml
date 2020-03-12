@@ -2,9 +2,9 @@
   tasks:
     - name: Mount VMFS datastores to ESXi
       vmware_datastore_san_facts:
-        hostname: '{{ VMWARE_HOST }}'
-        username: '{{ VMWARE_USER }}'
-        password: '{{ VMWARE_PASSWORD }}'
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
         datastore_name: '{{ vcenter_datastore }}'
         validate_certs: False
       delegate_to: localhost
@@ -47,9 +47,9 @@
 
     - name: Mount VMFS datastores to ESXi
       vmware_host_datastore_san:
-          hostname: '{{ VMWARE_HOST }}'
-          username: '{{ VMWARE_USER }}'
-          password: '{{ VMWARE_PASSWORD }}'
+          hostname: '{{ vcenter_hostname }}'
+          username: '{{ vcenter_username }}'
+          password: '{{ vcenter_password }}'
           datastore_name: '{{ vcenter_datastore }}'
           volume_device_name: '{{ storage_wwn }}'
           esxi_hostname: '{{ esxi_hostname }}'

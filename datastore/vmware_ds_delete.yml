@@ -1,10 +1,11 @@
 - hosts: localhost
+
   tasks:
     - name: Mount VMFS datastores to ESXi
       vmware_datastore_san_facts:
-        hostname: '{{ VMWARE_HOST }}'
-        username: '{{ VMWARE_USER }}'
-        password: '{{ VMWARE_PASSWORD }}'
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
         datastore_name: '{{ vcenter_datastore }}'
         validate_certs: False
       delegate_to: localhost
@@ -18,7 +19,19 @@
         msg: "Unable to find 3PAR volume wwn of the datastore {{ vcenter_datastore }}"
       when: datastore_wwn is not defined
 
-    - name: "Find the 3PAR volume details for {{ vcenter_datastore }}"
+    - name: Unmount and delete the VMFS datastores from vCenter
+      vmware_host_datastore_san:
+          hostname: '{{ vcenter_hostname }}'
+          username: '{{ vcenter_username }}'
+          password: '{{ vcenter_password }}'
+          datastore_name: '{{ vcenter_datastore }}'
+          volume_device_name: '{{ datastore_wwn }}'
+          esxi_hostname: '{{ esxi_hostname }}'
+          validate_certs: False
+          state: absent
+      delegate_to: localhost
+
+    - name: "Find all the storage volumes"
       hpe3par_volume_facts:
         storage_system_ip: "{{ storage_system_ip }}"
         storage_system_username: "{{ storage_system_username }}"
@@ -35,23 +48,19 @@
         msg: "Fail to find any volume with {{ datastore_wwn }}"
       when: storage_wwn is not defined
 
-    - name: Update Volume "{{ storage_name }}"
+    - name: Delete VLUN
+      hpe3par_vlun:
+        storage_system_ip: "{{ storage_system_ip }}"
+        storage_system_username: "{{ storage_system_username }}"
+        storage_system_password: "{{ storage_system_password }}"
+        state: unexport_volume_from_hostset
+        volume_name: "{{ storage_name }}"
+        host_set_name: "{{ storage_cluster }}"
+
+    - name: Delete Volume "{{ storage_name }}"
       hpe3par_volume:
         storage_system_ip: "{{ storage_system_ip }}"
         storage_system_username: "{{ storage_system_username }}"
         storage_system_password: "{{ storage_system_password }}"
-        state: grow_to_size
+        state: absent
         volume_name: "{{ storage_name }}"
-        size: "{{ size }}"
-        size_unit: "{{ size_unit }}"
-
-    - name: Mount VMFS datastores to ESXi
-      vmware_host_datastore_san:
-          hostname: '{{ VMWARE_HOST }}'
-          username: '{{ VMWARE_USER }}'
-          password: '{{ VMWARE_PASSWORD }}'
-          datastore_name: '{{ vcenter_datastore }}'
-          volume_device_name: '{{ storage_wwn }}'
-          esxi_hostname: '{{ esxi_hostname }}'
-          validate_certs: False
-      delegate_to: localhost

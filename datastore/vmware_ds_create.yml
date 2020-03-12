@@ -32,16 +32,16 @@
         storage_system_ip: "{{ storage_system_ip }}"
         storage_system_username: "{{ storage_system_username }}"
         storage_system_password: "{{ storage_system_password }}"
-        state: export_volume_to_host
+        state: export_volume_to_hostset
         volume_name: "{{ volume_name }}"
-        host_name: "{{ storage_cluster }}"
+        host_set_name: "{{ storage_cluster }}"
         autolun: True
   
     - name: Mount VMFS datastores to ESXi
       vmware_host_datastore_san:
-        hostname: '{{ VMWARE_HOST }}'
-        username: '{{ VMWARE_USER }}'
-        password: '{{ VMWARE_PASSWORD }}'
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
         datastore_name: '{{ vcenter_datastore }}'
         volume_device_name: '{{ wwn }}'
         esxi_hostname: '{{ esxi_hostname }}'
