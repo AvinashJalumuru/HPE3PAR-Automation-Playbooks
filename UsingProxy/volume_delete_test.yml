@@ -1,7 +1,5 @@
 - hosts: localhost
-  vars_files:
-  - properties/test_volume_input.yml
-  - properties/credential-vault 
+  gather_facts: false
   tasks:
     - name: Printing the Storage credentials 
       debug:
@@ -23,4 +21,4 @@
         state=absent
         volume_name="{{ volume_name }}"
       environment:
-        no_proxy: "{{no_proxy_env}}"
+        no_proxy: "{{ storage_system_ip }}"
